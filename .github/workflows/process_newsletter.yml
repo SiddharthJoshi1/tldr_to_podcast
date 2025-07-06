@@ -8,6 +8,9 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  repository_dispatch:
+    types:[tldr-email-received]
+  
 
 permissions:
   contents: read
@@ -18,19 +21,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Checkout Repo
     - uses: actions/checkout@v4
+    
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
       with:
-        python-version: "3.10"
+        python-version: "3.11"
+    
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Lint with flake8
-      run: |
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    
+    - name: Create EML file from payload
+      run: | 
+        echo "${{ github.event.client_payload.eml_content }}" > temp_newsletter.eml
+
+    - name: Run python TLDR parser script
+      run: python tldr_parser.py temp_newsletter.eml
+
+    - name: Commit and push if it's changed.
+    - uses: stefanzweifel/git-auto-commit-action@v6
+      with: 
+        commit_message: "feat: Add new TLDR newsletter summary"
+        file_pattern: "*.md"
