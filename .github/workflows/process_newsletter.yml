@@ -4,10 +4,6 @@
 name: Python application
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
   repository_dispatch:
     types: [ "tldr-email-received" ]
   
@@ -39,7 +35,7 @@ jobs:
         echo "${{ github.event.client_payload.eml_content }}" > temp_newsletter.eml
 
     - name: Run python TLDR parser script
-      run: python tldr_parser.py temp_newsletter.eml
+      run: python tldr_extractor.py temp_newsletter.eml
 
     - name: Commit and push if it's changed.
       uses: stefanzweifel/git-auto-commit-action@v6
