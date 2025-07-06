@@ -9,7 +9,7 @@ on:
   pull_request:
     branches: [ "main" ]
   repository_dispatch:
-    types:[tldr-email-received]
+    types: [ "tldr-email-received" ]
   
 
 permissions:
@@ -22,7 +22,7 @@ jobs:
 
     steps:
     - name: Checkout Repo
-    - uses: actions/checkout@v4
+      uses: actions/checkout@v4
     
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
@@ -42,7 +42,7 @@ jobs:
       run: python tldr_parser.py temp_newsletter.eml
 
     - name: Commit and push if it's changed.
-    - uses: stefanzweifel/git-auto-commit-action@v6
+      uses: stefanzweifel/git-auto-commit-action@v6
       with: 
         commit_message: "feat: Add new TLDR newsletter summary"
         file_pattern: "*.md"
