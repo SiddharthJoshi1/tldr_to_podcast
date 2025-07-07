@@ -31,8 +31,8 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     
     - name: Create EML file from payload
-      run: | 
-        echo "${{ github.event.client_payload.eml_content }}" > temp_newsletter.eml
+      run: |
+        echo "${{ github.event.client_payload.eml_b64 }}" | base64 -d > temp_newsletter.eml
 
     - name: Run python TLDR parser script
       run: python tldr_extractor.py temp_newsletter.eml
