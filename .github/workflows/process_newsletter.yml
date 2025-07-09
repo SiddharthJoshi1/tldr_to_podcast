@@ -32,7 +32,7 @@ jobs:
     
     - name: Create EML file from payload
       run: |
-        echo "${{ github.event.client_payload.eml_b64 }}" | base64 -d > temp_newsletter.eml
+        echo "${{ github.event.client_payload.html_content }}" > temp_newsletter.html
 
     - name: Run python TLDR parser script
       run: python tldr_extractor.py temp_newsletter.eml
