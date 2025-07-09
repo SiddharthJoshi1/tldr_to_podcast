@@ -38,7 +38,7 @@ jobs:
       
 
     - name: Run python TLDR parser script
-      run: python tldr_extractor.py temp_newsletter.html
+      run: python tldr_extractor_v2.py temp_newsletter.html
 
     - name: Commit and push if it's changed.
       uses: stefanzweifel/git-auto-commit-action@v6
