@@ -75,7 +75,7 @@ def fetch_full_article_content(url):
         return f"[Scraping failed for this URL. Error: {e}]"
 
 def generate_markdown_file(articles_data, newsletter_date):
-    filename = f"tldr_summary_{newsletter_date}.md"
+    filename = f"tldr_summaries/tldr_summary_{newsletter_date}.md"
     print(f"\n4. Generating Markdown file: {filename}")
     
     with open(filename, 'w', encoding='utf-8') as f:
