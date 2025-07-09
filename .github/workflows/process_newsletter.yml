@@ -44,4 +44,4 @@ jobs:
       uses: stefanzweifel/git-auto-commit-action@v6
       with: 
         commit_message: "feat: Add new TLDR newsletter summary"
-        file_pattern: "*.md"
+        file_pattern: "tldr_summaries/*.md"
